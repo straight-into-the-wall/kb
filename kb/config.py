@@ -17,6 +17,7 @@ import os
 
 # from sys import platform
 from pathlib import Path
+from typing import Dict
 
 import toml
 
@@ -41,6 +42,21 @@ DEFAULT_CONFIG = {
     "INITIAL_CATEGORIES": [
         "default",
     ],
+}
+
+DEFAULT_CONFIG_DESC = {
+    "PATH_KB": "- Base path for kb configuration files:\t",
+    "PATH_KB_DB": "- Path of kb DB:\t\t\t",
+    "PATH_KB_HIST": "- Path of kb history file:\t\t",
+    "PATH_KB_DATA": "- Path of kb data files:\t\t",
+    "PATH_KB_GIT": "- Path of git directory:\t\t",
+    "PATH_KB_CONFIG": "- Path of kb.conf.py:\t\t\t",
+    "PATH_KB_TEMPLATES": "- Path of templates files:\t\t",
+    "PATH_KB_DEFAULT_TEMPLATE": "- Path of the default template:\t\t",
+    "PATH_KB_MARKDOWN_TEMPLATE": "- Path of the default markdown template:",
+    "DB_SCHEMA_VERSION": "- Version of the DB:\t\t\t",
+    "EDITOR": "- Default editor:\t\t\t",
+    "INITIAL_CATEGORIES": "- Initial categories:\t\t\t",
 }
 
 
@@ -77,3 +93,18 @@ def get_markers(markers_path: str):
     except FileNotFoundError:
         print("Error: The provided file does not exist or cannot be accessed")
     return None
+
+
+def dump_config(_args: Dict[str, str], config: Dict[str, str]):
+    """
+    Print the actuals config values to console.
+
+    Arguments:
+    _args     - ignored
+    config    - the current configuration dictionary
+
+    Returns None
+    """
+    print("\n kb Environment\n")
+    for key in config.keys():
+        print(DEFAULT_CONFIG_DESC[key], DEFAULT_CONFIG[key])

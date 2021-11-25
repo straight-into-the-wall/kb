@@ -28,21 +28,22 @@ from kb.commands.sync import sync
 from kb.commands.template import template
 from kb.commands.update import update
 from kb.commands.view import view
-from kb.config import DEFAULT_CONFIG
+from kb.config import DEFAULT_CONFIG, dump_config
 
 COMMANDS = {
     "add": add,
     "delete": delete,
     "edit": edit,
-    "update": update,
-    "list": search,
-    "view": view,
-    "grep": grep,
+    "env": dump_config,
     "erase": erase,
-    "import": ingest,
     "export": export,
-    "template": template,
+    "grep": grep,
+    "import": ingest,
+    "list": search,
     "sync": sync,
+    "template": template,
+    "update": update,
+    "view": view,
 }
 
 

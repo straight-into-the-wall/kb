@@ -39,40 +39,67 @@ def parse_args(args: Sequence[str]) -> argparse.Namespace:
     )
 
     parser.add_argument(
-        "--version",
-        action="version",
-        version="%(prog)s {}".format(__version__))
+        "--version", action="version", version="%(prog)s {}".format(__version__)
+    )
 
     subparsers = parser.add_subparsers(help="commands", dest="command")
     subparsers.required = True
 
     # Main Commands
+
+    #    "add": add,
     add_parser = subparsers.add_parser("add", help="Add an artifact")
-    edit_parser = subparsers.add_parser(
-        "edit", help="Edit an artifact content")
-    list_parser = subparsers.add_parser("list", help="Search for artifacts")
-    view_parser = subparsers.add_parser("view", help="View artifacts")
-    grep_parser = subparsers.add_parser(
-        "grep", help="Grep through kb artifacts")
-    update_parser = subparsers.add_parser(
-        "update", help="Update artifact properties")
+
+    #     "delete": delete,
     delete_parser = subparsers.add_parser("delete", help="Delete artifacts")
-    template_parser = subparsers.add_parser(
-        "template", help="Manage templates for artifacts"
+
+    #     "edit": edit,
+    edit_parser = subparsers.add_parser("edit", help="Edit an artifact content")
+
+    #     "env": dump_config,
+    env_parser = subparsers.add_parser(
+        "env", help="Print the environment configuration values."
     )
-    import_parser = subparsers.add_parser(
-        "import", help="Import a knowledge base")
-    export_parser = subparsers.add_parser(
-        "export", help="Export the knowledge base")
+
+    #     "erase": erase,
     erase_parser = subparsers.add_parser(
         "erase", help="Erase the entire kb knowledge base"
     )
-    sync_parser = subparsers.add_parser(
-        "sync", help="Synchronize the knowledge base with a remote git repository")
+
+    #     "export": export,
+    export_parser = subparsers.add_parser("export", help="Export the knowledge base")
+
+    #     "grep": grep,
+    grep_parser = subparsers.add_parser("grep", help="Grep through kb artifacts")
+
+    #     "import": ingest,
+    import_parser = subparsers.add_parser("import", help="Import a knowledge base")
+
+    # help
     help_parser = subparsers.add_parser(
         "help", help="Show help of a particular command"
     )
 
+    #     "list": search,
+    list_parser = subparsers.add_parser("list", help="Search for artifacts")
+
+    #     "sync": sync,
+    sync_parser = subparsers.add_parser(
+        "sync", help="Synchronize the knowledge base with a remote git repository"
+    )
+
+    #     "template": template,
+    template_parser = subparsers.add_parser(
+        "template", help="Manage templates for artifacts"
+    )
+
+    #     "update": update,
+    update_parser = subparsers.add_parser("update", help="Update artifact properties")
+
+    #     "view": view,
+    view_parser = subparsers.add_parser("view", help="View artifacts")
+
+    # Arguments
     # add parser
     add_parser.add_argument(
         "file",
@@ -574,11 +601,8 @@ def parse_args(args: Sequence[str]) -> argparse.Namespace:
 
     # export parser
     export_parser.add_argument(
-        "-f",
-        "--file",
-        help="Name of the exported archive",
-        type=str,
-        nargs="?")
+        "-f", "--file", help="Name of the exported archive", type=str, nargs="?"
+    )
     export_parser.add_argument(
         "-d",
         "--only-data",
@@ -608,10 +632,7 @@ def parse_args(args: Sequence[str]) -> argparse.Namespace:
         choices=["init", "push", "pull", "info"],
     )
 
-    help_parser.add_argument(
-        "cmd",
-        help="Name of command to get help for",
-        nargs="?")
+    help_parser.add_argument("cmd", help="Name of command to get help for", nargs="?")
 
     if len(args) == 0:
         parser.print_help(sys.stderr)
@@ -626,8 +647,7 @@ def parse_args(args: Sequence[str]) -> argparse.Namespace:
                 subparsers.choices[parsed_args.cmd].print_help()
             except KeyError:
                 print(f"Unknown command name `{parsed_args.cmd}`")
-                print(
-                    f"Valid commands are: {', '.join(subparsers.choices.keys())}")
+                print(f"Valid commands are: {', '.join(subparsers.choices.keys())}")
         sys.exit(1)
 
     return parsed_args
